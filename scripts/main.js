@@ -1532,13 +1532,13 @@ Frogger.Character = (function(Frogger) {
         // countdown timer at the base of the screen
         if (this.top > _gameBoard.characterBounds.bottom) {
             this.top = _gameBoard.characterBounds.bottom;
-        }
+        } else _currentRow++; // Keep track of the current row the character sits upon. Moved to else, to prevent "moving away" when moveDown from the bottom of the screen
 
         // Play the animation named "move-down", making it look like the character is moving
         this.playAnimation("move-down");
 
-        // Keep track of the current row the character sits upon
-        _currentRow++;
+        
+        
     };
 
     // Define a method to move the character one column to the left on the game board

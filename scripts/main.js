@@ -1537,8 +1537,8 @@ Frogger.Character = (function(Frogger) {
         // Play the animation named "move-down", making it look like the character is moving
         this.playAnimation("move-down");
 
-        
-        
+
+
     };
 
     // Define a method to move the character one column to the left on the game board
@@ -1953,18 +1953,23 @@ Frogger.Row = (function() {
         // of them
         for (; index < length; index++) {
             obstaclesItem = this.obstacles[index];
+            // Skip the goal frogs appended to the row
+            if (! ('isMet' in obstaclesItem)) break;
 
             // If this goal has not been reached before and the player's character is
             // positioned above the goal, fire the "player-at-goal" event so the game logic
             // module registers that the goal has been reached
-            if (!obstaclesItem.isMet && Frogger.intersects(obstaclesItem.getPosition(), characterPosition)) {
-                this.obstacles[index].isMet = true;
-                Frogger.observer.publish("player-at-goal");
-                isCollision = false;
+            if (Frogger.intersects(obstaclesItem.getPosition(), characterPosition)) {
+                if (!obstaclesItem.isMet) {
+                    this.obstacles[index].isMet = true;
+                    Frogger.observer.publish("player-at-goal");
+                    isCollision = false;
 
-                // Add the image of the goal-reached frog to the row within the goal
-                // reached so the user can see that they have reached this goal before
-                this.obstacles.push(new Frogger.Image.GoalFrog(obstaclesItem.getPosition().left));
+                    // Add the image of the goal-reached frog to the row within the goal
+                    // reached so the user can see that they have reached this goal before
+                    this.obstacles.push(new Frogger.Image.GoalFrog(obstaclesItem.getPosition().left));
+                }
+                break;
             }
         }
 

@@ -1,4 +1,4 @@
-Frogger In Canvas
+Timber Frogger In Canvas
 =================
 
 HTML5 Canvas-based version of the classic arcade game Frogger.
